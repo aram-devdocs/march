@@ -24,7 +24,7 @@ export default function App() {
             <Grid item xs={6}>
               <Terminal />
             </Grid>
-            <Grid item xs={6}>
+            <Grid id={"grid_map"} item xs={6}>
               <Map />
             </Grid>
             <Grid item xs={12}>

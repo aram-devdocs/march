@@ -1,42 +1,272 @@
-import React from "react";
-import { useCanvas } from "../hooks/useCanvas";
+import React, { useEffect, useState } from "react";
+// import { useCanvas } from "../hooks/useCanvas";
 import { Box } from "@mui/system";
+import { Container } from "@mui/material";
 
 export default function Map() {
-  const [coordinates, setCoordinates, canvasRef, canvasWidth, canvasHeight] =
-    useCanvas();
+  // Call in useEffect to draw page
+  function drawCanvas(id) {
+    const array2D = [
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+      [
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+        "R",
+        "Y",
+      ],
+    ];
 
-  const handleCanvasClick = (event) => {
-    // on each click get current mouse location
-    const currentCoord = { x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY };
-    console.log(event);
-    // add the newest mouse location to an array in state
-    console.log(currentCoord);
-    setCoordinates([...coordinates, currentCoord]);
-  };
+    const canvas = document.getElementById(id);
 
-  const handleClearCanvas = (event) => {
-    setCoordinates([]);
-  };
+    canvas.width = 640; // 20 cells
+    canvas.height = 320; // 20 cells
+    const cellSide = 32;
+
+    var ctx = canvas.getContext("2d");
+
+    for (let i = 0; i < array2D.length; i++) {
+      for (let j = 0; j < array2D[i].length; j++) {
+        let x = j * cellSide;
+        let y = i * cellSide;
+
+        let cellColor = "#e74c3c";
+
+        if (array2D[i][j] === "Y") cellColor = "#f1c40f";
+
+        ctx.beginPath();
+        ctx.fillStyle = cellColor;
+        ctx.fillRect(x, y, cellSide, cellSide);
+      }
+    }
+  }
+
+  useEffect(() => {
+    drawCanvas("grid");
+  });
 
   return (
-    <div>
+    <Container
+      // sx={}
+      id={"map_container"}
+    >
       <Box
+        // sx={}s
         component={"canvas"}
-        sx={{
-          backgroundColor: "cornsilk",
-          border: "5px",
-          borderColor: "black",
-        }}
-        className="canvas"
-        ref={canvasRef}
-        width={canvasWidth}
-        height={canvasHeight}
-        onClick={handleCanvasClick}
+        id={"grid"}
       />
-      <div className="button">
-        <button onClick={handleClearCanvas}> CLEAR </button>
-      </div>
-    </div>
+    </Container>
   );
 }
