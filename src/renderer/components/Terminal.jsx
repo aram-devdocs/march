@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Input } from "@mui/material";
+
+const term_sx = { color: "black" };
 export default function Terminal() {
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalContents, setTerminalContents] = useState([]);
@@ -11,11 +13,55 @@ export default function Terminal() {
     setTerminalInput(val);
   }
 
+  function checkCommand(cmd) {
+    let termMsg = null;
+    switch (cmd) {
+      case "help":
+        termMsg = [
+          <Typography
+            sx={term_sx}
+            key={terminalContents.length + "_help_" + terminalInput}
+          >
+            Need help? Here are a list of commands.
+          </Typography>,
+          <Typography
+            sx={term_sx}
+            key={terminalContents.length + "_help_" + terminalInput}
+          >
+            Uh oh. No commands
+          </Typography>,
+        ];
+        break;
+
+      default:
+        termMsg = [
+          <Typography
+            sx={term_sx}
+            key={terminalContents.length + "_help_" + terminalInput}
+          >
+            No command found
+          </Typography>,
+        ];
+        break;
+    }
+
+    console.log(termMsg)
+    return termMsg;
+  }
+
   function keyPress(e) {
     if (e.keyCode == 13) {
       //   console.log(terminalInput);
-      const newLine = <Typography sx={{color: "black"}} key={terminalContents.length + "terminal_line_id"}>{terminalInput}</Typography>;
-      setTerminalContents([newLine, ...terminalContents]);
+      const newLine = (
+        <Typography
+          sx={term_sx}
+          key={terminalContents.length + "terminal_line_id"}
+        >
+          {terminalInput}
+        </Typography>
+      );
+      const termMsg = checkCommand(terminalInput);
+      setTerminalContents([newLine, termMsg, ...terminalContents]);
       setTerminalInput("");
 
       // put the login here
@@ -34,7 +80,7 @@ export default function Terminal() {
           backgroundColor: "white",
           overflowY: "auto",
           display: "flex",
-          flexDirection: "column-reverse"
+          flexDirection: "column-reverse",
         }}
       >
         {terminalContents}
