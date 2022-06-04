@@ -8,8 +8,10 @@ export default function Map() {
 
   const handleCanvasClick = (event) => {
     // on each click get current mouse location
-    const currentCoord = { x: event.clientX, y: event.clientY };
+    const currentCoord = { x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY };
+    console.log(event);
     // add the newest mouse location to an array in state
+    console.log(currentCoord);
     setCoordinates([...coordinates, currentCoord]);
   };
 

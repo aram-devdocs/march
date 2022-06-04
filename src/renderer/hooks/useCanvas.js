@@ -7,7 +7,7 @@ const SVG_PATH = new Path2D(heartSVG);
 
 // Scaling Constants for Canvas
 const SCALE = 0.1;
-const OFFSET = 0;
+const OFFSET = 80;
 export const canvasWidth = window.innerWidth * 0.5;
 export const canvasHeight = window.innerHeight * 0.5;
 
@@ -18,7 +18,7 @@ export function draw(ctx, location) {
   ctx.shadowBlur = 15;
   ctx.save();
   ctx.scale(SCALE, SCALE);
-  ctx.translate(location.x / SCALE - OFFSET, location.y / SCALE - OFFSET);
+  ctx.translate(location.x, location.y);
   ctx.rotate((225 * Math.PI) / 180);
   ctx.fill(SVG_PATH);
   // .restore(): Canvas 2D API restores the most recently saved canvas state
@@ -39,6 +39,8 @@ export function useCanvas() {
     coordinates.forEach((coordinate) => {
       draw(ctx, coordinate);
     });
+
+    draw(ctx, { x: 10, y: 10 });
     console.log();
   }, [coordinates]); // TODO: Check if coordinates removal works
 
