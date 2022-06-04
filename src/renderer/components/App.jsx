@@ -19,7 +19,6 @@ export default function App() {
       >
         <main>
           {/* This is where your app content should go */}
-          {/* <Greetings /> */}
 
           <Grid container spacing={3}>
             <Grid item xs={6}>
