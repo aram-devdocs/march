@@ -4,31 +4,37 @@ import { Box } from "@mui/system";
 import { Input } from "@mui/material";
 
 const term_sx = { color: "black" };
-export default function Terminal() {
+export default function Terminal(props) {
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalContents, setTerminalContents] = useState([]);
+
+  const _state = props._state;
 
   function onChange(e) {
     const val = e.target.value;
     setTerminalInput(val);
   }
 
-  function checkCommand(cmd) {
+  function checkCommand() {
     let termMsg = null;
-    switch (cmd) {
+    switch (terminalInput) {
+      case "clear":
+        setTerminalContents([]);
+        console.log("clear")
+        break;
       case "help":
         termMsg = [
           <Typography
             sx={term_sx}
             key={terminalContents.length + "_help_" + terminalInput}
           >
-            Need help? Here are a list of commands.
+            Uh oh. No commands
           </Typography>,
           <Typography
             sx={term_sx}
             key={terminalContents.length + "_help_" + terminalInput}
           >
-            Uh oh. No commands
+            Need help? Here are a list of commands.
           </Typography>,
         ];
         break;
@@ -45,23 +51,23 @@ export default function Terminal() {
         break;
     }
 
-    console.log(termMsg)
+    console.log(termMsg);
     return termMsg;
   }
 
   function keyPress(e) {
     if (e.keyCode == 13) {
       //   console.log(terminalInput);
-      const newLine = (
-        <Typography
-          sx={term_sx}
-          key={terminalContents.length + "terminal_line_id"}
-        >
-          {terminalInput}
-        </Typography>
-      );
+      // const newLine = (
+      //   <Typography
+      //     sx={term_sx}
+      //     key={terminalContents.length + "terminal_line_id"}
+      //   >
+      //     {terminalInput}
+      //   </Typography>
+      // );
       const termMsg = checkCommand(terminalInput);
-      setTerminalContents([newLine, termMsg, ...terminalContents]);
+      setTerminalContents([termMsg, ...terminalContents]);
       setTerminalInput("");
 
       // put the login here
