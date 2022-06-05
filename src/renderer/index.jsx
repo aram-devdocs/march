@@ -1,5 +1,7 @@
 import React from "react";
-import { render } from "react-dom";
+// import ReactDOM, { render } from "react-dom";
+import {createRoot} from "react-dom/client"
+
 import App from "./components/App";
 
 // Setup root node where our React app will be attached to
@@ -9,4 +11,6 @@ root.id = "root";
 document.body.appendChild(root);
 
 // Render the app component
-render(<App />, document.getElementById("root"));
+// render(<App />, document.getElementById("root"));
+const rootComponent = createRoot(root);
+rootComponent.render(<App />);

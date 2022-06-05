@@ -5,6 +5,7 @@ import { Input } from "@mui/material";
 
 const term_sx = { color: "black" };
 export default function Terminal(props) {
+  const [key, setKey] = useState(0);
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalContents, setTerminalContents] = useState([]);
 
@@ -20,7 +21,7 @@ export default function Terminal(props) {
     switch (terminalInput) {
       case "clear":
         setTerminalContents([]);
-        console.log("clear")
+        console.log("clear");
         break;
       case "help":
         termMsg = [
