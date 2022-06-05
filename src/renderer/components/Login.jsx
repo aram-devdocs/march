@@ -5,7 +5,7 @@ import {
   Input,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Login(props) {
@@ -20,7 +20,7 @@ export default function Login(props) {
       .post("/users/login", { username, password })
       .then((r) => {
         if (r.data.status) {
-          _state.switch.loggedIn();
+          _state.set.loggedIn(true);
         }
       })
       .catch((e) => console.log(e));
@@ -37,6 +37,10 @@ export default function Login(props) {
       })
       .catch((e) => console.log(e));
   }
+
+  useEffect(()=> {
+      console.log("log in time")
+  })
   return (
     <Container>
       <Input

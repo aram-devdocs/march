@@ -25,7 +25,12 @@ export default function Header(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {/*  */}
           </Typography>
-          <Button onClick={_state.switch.loggedIn} color="inherit">
+          <Button
+            onClick={() => {
+              _state.set.loggedIn(false);
+            }}
+            color="inherit"
+          >
             Logout
           </Button>
         </Toolbar>

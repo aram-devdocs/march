@@ -21,7 +21,7 @@ export default function App() {
 
   const [view, setView] = useState([]);
   const [loggedIn, setLoggedIn] = useState(
-    localStorage.getItem("loggedIn") || false
+    JSON.parse(localStorage.getItem("loggedIn")) || null
   );
 
   // Global _state handler
@@ -32,26 +32,20 @@ export default function App() {
 
     set: {
       view: (data) => setView(data),
-    },
+      loggedIn: (data) => {
+        localStorage.setItem("loggedIn", data);
 
-    switch: {
-      loggedIn: () => {
-        localStorage.setItem("loggedIn", !loggedIn);
-
-        setLoggedIn(!loggedIn);
+        setLoggedIn(data);
       },
     },
+
+    switch: {},
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .post("http://localhost:3005/test", {
-  //       username: "test",
-  //       password: "password",
-  //     })
-  //     .then((r) => console.log(r.data))
-  //     .catch((e) => console.log(e));
-  // }, []);
+  useEffect(() => {
+    console.log(loggedIn);
+  }, []);
+
   return (
     // Setup theme and css baseline for the Material-UI app
     // https://mui.com/customization/theming/
@@ -63,8 +57,6 @@ export default function App() {
         }}
       >
         <main>
-          {/* This is where your app content should go */}
-          {/* DEBUG */}
           {!loggedIn ? (
             <Login _state={_state} />
           ) : (
