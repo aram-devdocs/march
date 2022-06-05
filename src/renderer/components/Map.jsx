@@ -15,18 +15,34 @@ export default function Map(props) {
 
     var ctx = canvas.getContext("2d");
 
-    for (let i = 0; i < _state.get.view.length; i++) {
-      for (let j = 0; j < _state.get.view[i].length; j++) {
+    const view = _state.get.view;
+
+    for (let i = 0; i < view.length; i++) {
+      for (let j = 0; j < view[i].length; j++) {
         let x = j * cellSide;
         let y = i * cellSide;
 
-        let cellColor = "#e74c3c";
+        // let cellColor = "#e74c3c";
 
-        if (_state.get.view[i][j] === "Y") cellColor = "#f1c40f";
+        // if (view[i][j] === "Y") cellColor = "#f1c40f";
 
         ctx.beginPath();
-        ctx.fillStyle = cellColor;
-        ctx.fillRect(x, y, cellSide, cellSide);
+        // ctx.fillStyle = cellColor;
+        // ctx.fillRect(x, y, cellSide, cellSide);
+        const image = new Image();
+
+        switch (view[i][j]) {
+          case 0:
+            image.src = "/assets/dirt.png";
+            ctx.drawImage(image, x, y, cellSide, cellSide);
+            break;
+
+          default:
+            image.src = "/assets/dirt.png";
+            ctx.drawImage(image, x, y, cellSide, cellSide);
+
+            break;
+        }
       }
     }
   }
