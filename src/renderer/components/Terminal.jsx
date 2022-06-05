@@ -20,21 +20,14 @@ export default function Terminal(props) {
     let termMsg = null;
     switch (terminalInput) {
       case "clear":
-        setTerminalContents([]);
-        console.log("clear");
+        termMsg = [];
         break;
       case "help":
         termMsg = [
-          <Typography
-            sx={term_sx}
-            key={terminalContents.length + "_help_" + terminalInput}
-          >
+          <Typography sx={term_sx} key={"terminal_" + key}>
             Uh oh. No commands
           </Typography>,
-          <Typography
-            sx={term_sx}
-            key={terminalContents.length + "_help_" + terminalInput}
-          >
+          <Typography sx={term_sx} key={"terminal_" + key + 1}>
             Need help? Here are a list of commands.
           </Typography>,
         ];
@@ -42,15 +35,14 @@ export default function Terminal(props) {
 
       default:
         termMsg = [
-          <Typography
-            sx={term_sx}
-            key={terminalContents.length + "_help_" + terminalInput}
-          >
-            No command found
+          <Typography sx={term_sx} key={"terminal_" + key}>
+            {terminalInput}: NOT A COMMAND
           </Typography>,
         ];
         break;
     }
+
+    setKey(key + termMsg.length);
 
     console.log(termMsg);
     return termMsg;
@@ -68,7 +60,7 @@ export default function Terminal(props) {
       //   </Typography>
       // );
       const termMsg = checkCommand(terminalInput);
-      setTerminalContents([termMsg, ...terminalContents]);
+      setTerminalContents([termMsg]);
       setTerminalInput("");
 
       // put the login here
