@@ -7,13 +7,20 @@ let mainWindow: Electron.BrowserWindow | null;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1100,
-    height: 700,
+    width: 1500,
+    height: 800,
     backgroundColor: "#f2f2f2",
+    // resizable: false,
+    minHeight: 800,
+    minWidth: 1300,
+    title: "March",
+
     webPreferences: {
       nodeIntegration: true,
+      nodeIntegrationInWorker: true,
       contextIsolation: false,
       devTools: process.env.NODE_ENV !== "production",
+      // preload: "ENTER FILE TO PRELOAD"
     },
   });
 
@@ -34,8 +41,6 @@ function createWindow() {
   });
 }
 
-
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -49,6 +54,17 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+// TODO : On 'resize', reload screen to adjust to new params
+
+// TODO : On Blur, exit, foxus, etc, save progress in api call to server to ensure everything saves
+// https://www.electronjs.org/docs/latest/api/browser-window
+
+
+// process.dlopen = () => {
+//   throw new Error('Load native module is not safe')
+// }
+// const worker = new Worker('script.js')
 
 app.on("activate", () => {
   // On OS X it"s common to re-create a window in the app when the
