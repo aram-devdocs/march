@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Input } from "@mui/material";
-
+import { ListItem, List, ListItemButton, ListItemText } from "@mui/material";
+import { Tooltip } from "@mui/material";
+import ArrowBack from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForward from "@mui/icons-material/ArrowForwardIos";
 const term_sx = { color: "black" };
 export default function Terminal(props) {
   const [key, setKey] = useState(0);
@@ -18,31 +21,39 @@ export default function Terminal(props) {
 
   function checkCommand() {
     let termMsg = null;
+
     switch (terminalInput) {
       case "clear":
-        termMsg = [];
+        setTerminalContents([]);
         break;
       case "help":
         termMsg = [
-          <Typography sx={term_sx} key={"terminal_" + key}>
-            Uh oh. No commands
-          </Typography>,
-          <Typography sx={term_sx} key={"terminal_" + key + 1}>
-            Need help? Here are a list of commands.
-          </Typography>,
+          <List key={"terminal_" + key}>
+            <ListItem disablePadding>
+              <Tooltip title="Remove all history from terminal">
+                <ListItemText primary="Clear" />
+              </Tooltip>
+            </ListItem>
+            <ListItem disablePadding>
+              <Tooltip title="Show list of commands">
+                <ListItemText primary="Help" />
+              </Tooltip>
+            </ListItem>
+          </List>,
         ];
         break;
 
       default:
         termMsg = [
           <Typography sx={term_sx} key={"terminal_" + key}>
+            <ArrowBack fontSize="small" />
             {terminalInput}: NOT A COMMAND
           </Typography>,
         ];
         break;
     }
 
-    setKey(key + termMsg.length);
+    if (termMsg) setKey(key + termMsg.length);
 
     console.log(termMsg);
     return termMsg;
@@ -50,17 +61,16 @@ export default function Terminal(props) {
 
   function keyPress(e) {
     if (e.keyCode == 13) {
-      //   console.log(terminalInput);
-      // const newLine = (
-      //   <Typography
-      //     sx={term_sx}
-      //     key={terminalContents.length + "terminal_line_id"}
-      //   >
-      //     {terminalInput}
-      //   </Typography>
-      // );
+      const newLine = (
+        <Typography
+          sx={term_sx}
+          key={terminalContents.length + "terminal_line_id"}
+        >
+          <ArrowForward fontSize="small" /> {terminalInput}
+        </Typography>
+      );
       const termMsg = checkCommand(terminalInput);
-      setTerminalContents([termMsg]);
+      setTerminalContents([...termMsg, newLine, ...terminalContents]);
       setTerminalInput("");
 
       // put the login here
