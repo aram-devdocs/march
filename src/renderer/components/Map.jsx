@@ -51,11 +51,7 @@ export default function Map(props) {
       // sx={}
       id={"map_container"}
     >
-      <Box
-        // sx={}s
-        component={"canvas"}
-        id={"grid"}
-      />
+      <Box sx={{ borderStyle: "solid" }} component={"canvas"} id={"grid"} />
 
       <Button onClick={drawDemo}>Draw Demo</Button>
       <Button onClick={() => _state.set.view([])}>Clear</Button>

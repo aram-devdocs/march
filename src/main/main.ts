@@ -12,7 +12,7 @@ function createWindow() {
     backgroundColor: "#f2f2f2",
     // resizable: false,
     minHeight: 800,
-    minWidth: 1300,
+    minWidth: 1400,
     title: "March",
 
     webPreferences: {

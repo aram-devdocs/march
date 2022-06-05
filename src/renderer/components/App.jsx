@@ -60,7 +60,7 @@ export default function App() {
           {!loggedIn ? (
             <Login _state={_state} />
           ) : (
-            <Container>
+            <Box>
               <Header _state={_state} />
               <Grid container spacing={3}>
                 <Grid item xs={6}>
@@ -73,7 +73,7 @@ export default function App() {
                   <Details />
                 </Grid>
               </Grid>
-            </Container>
+            </Box>
           )}
         </main>
       </Box>
