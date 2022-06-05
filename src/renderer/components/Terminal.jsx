@@ -69,8 +69,10 @@ export default function Terminal(props) {
           <ArrowForward fontSize="small" /> {terminalInput}
         </Typography>
       );
-      const termMsg = checkCommand(terminalInput);
-      setTerminalContents([...termMsg, newLine, ...terminalContents]);
+      let termMsg = checkCommand(terminalInput);
+      if (termMsg)
+        setTerminalContents([...termMsg, newLine, ...terminalContents]);
+
       setTerminalInput("");
 
       // put the login here
