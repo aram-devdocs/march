@@ -1,235 +1,12 @@
 import React, { useEffect, useState } from "react";
-// import { useCanvas } from "../hooks/useCanvas";
+import axios from "axios";
 import { Box } from "@mui/system";
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 
 export default function Map(props) {
   const _state = props._state;
   // Call in useEffect to draw page
   function drawCanvas(id) {
-    // const array2D = [
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    //   [
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //     "R",
-    //     "Y",
-    //   ],
-    // ];
-
     const canvas = document.getElementById(id);
 
     canvas.width = 640; // 20 cells
@@ -254,6 +31,17 @@ export default function Map(props) {
     }
   }
 
+  function drawDemo() {
+    axios
+      .get("/maps/demo")
+      .then((r) => {
+        if (r.data.status) {
+          _state.set.view(r.data.map);
+        }
+      })
+      .catch((e) => console.log(e));
+  }
+
   useEffect(() => {
     drawCanvas("grid");
   });
@@ -268,6 +56,9 @@ export default function Map(props) {
         component={"canvas"}
         id={"grid"}
       />
+
+      <Button onClick={drawDemo}>Draw Demo</Button>
+      <Button onClick={() => _state.set.view([])}>Clear</Button>
     </Container>
   );
 }
