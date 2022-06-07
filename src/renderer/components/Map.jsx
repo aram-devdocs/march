@@ -3,6 +3,10 @@ import axios from "axios";
 import { Box } from "@mui/system";
 import { Button, Container } from "@mui/material";
 
+// Image imports
+import dirt from "../assets/dirt.png";
+import grass from "../assets/grass.jpg";
+
 export default function Map(props) {
   const _state = props._state;
   // Call in useEffect to draw page
@@ -33,16 +37,16 @@ export default function Map(props) {
 
         switch (view[i][j]) {
           case 0:
-            image.src = "/assets/dirt.png";
-            ctx.drawImage(image, x, y, cellSide, cellSide);
+            image.src = dirt;
+
             break;
-
           default:
-            image.src = "/assets/dirt.png";
-            ctx.drawImage(image, x, y, cellSide, cellSide);
-
+            image.src = grass;
             break;
         }
+
+        ctx.drawImage(image, x, y, cellSide, cellSide);
+        ctx.drawImage(image, x, y, cellSide, cellSide);
       }
     }
   }
